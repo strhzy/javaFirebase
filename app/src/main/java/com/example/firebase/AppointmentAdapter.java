@@ -29,17 +29,9 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     public void onBindViewHolder(@NonNull AppointmentViewHolder holder, int position) {
         Appointment appointment = appointmentList.get(position);
 
-        // Форматирование даты и времени
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-
-        String dateStr = dateFormat.format(appointment.getDate());
-        String timeStr = timeFormat.format(appointment.getTime());
-
-        holder.textAppointmentId.setText("ID: " + appointment.getId());
         holder.textClientName.setText("Client: " + appointment.getClientName());
         holder.textServiceName.setText("Service: " + appointment.getServiceName());
-        holder.textDateTime.setText("Date: " + dateStr + ", Time: " + timeStr);
+        holder.textDateTime.setText("Date: " + appointment.getDate() + ", Time: " + appointment.getTime());
     }
 
     @Override

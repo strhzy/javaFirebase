@@ -11,7 +11,7 @@ public class Appointment implements Serializable {
     private String service_id;
     private String service_name;
     private String date;
-    private Time time;
+    private String time;
 
     public String getId() {
         return id;
@@ -61,11 +61,11 @@ public class Appointment implements Serializable {
         this.date = date;
     }
 
-    public Time getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(String time) {
         this.time = time;
     }
 }

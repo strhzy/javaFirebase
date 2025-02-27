@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class UserCRUDActivity extends AppCompatActivity {
-    private EditText editId, editEmail, editRole;
+    private EditText editId, editEmail, editRole, editPassword;
     private Button btnSave, btnDelete;
     private FirebaseFirestore db;
 
@@ -22,6 +22,8 @@ public class UserCRUDActivity extends AppCompatActivity {
         Usr = user;
         editEmail = findViewById(R.id.editEmail);
         editRole = findViewById(R.id.editRole);
+        editPassword = findViewById(R.id.editPassword);
+
         btnSave = findViewById(R.id.btnSave);
         btnDelete = findViewById(R.id.btnDelete);
 
@@ -58,5 +60,7 @@ public class UserCRUDActivity extends AppCompatActivity {
         db.collection("users").document(id).delete()
                 .addOnSuccessListener(aVoid -> Toast.makeText(this, "Удалено", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Toast.makeText(this, "Ошибка удаления", Toast.LENGTH_SHORT).show());
+
+
     }
 }

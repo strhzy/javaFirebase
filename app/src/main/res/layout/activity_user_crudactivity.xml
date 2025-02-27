@@ -17,6 +17,12 @@
         android:layout_height="wrap_content"
         android:hint="Роль" />
 
+    <EditText
+        android:id="@+id/editPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Пароль" />
+
     <Button
         android:id="@+id/btnSave"
         android:layout_width="match_parent"

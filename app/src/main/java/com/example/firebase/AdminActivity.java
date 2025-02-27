@@ -31,7 +31,6 @@ public class AdminActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Передаём обработчик клика в адаптер
         adapter = new AdminAdapter(dataList, this, (position, item) -> {
             if (item instanceof User) {
                 User user = (User) item;
@@ -49,7 +48,7 @@ public class AdminActivity extends AppCompatActivity {
                 Service service = (Service) item;
                 Toast.makeText(this, "Сервис: " + service.getName(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, ServiceCRUDActivity.class);
-                intent.putExtra("service", (Serializable) service); // Передаём объект
+                intent.putExtra("service", (Serializable) service);
                 startActivity(intent);
             }
         });
@@ -74,19 +73,19 @@ public class AdminActivity extends AppCompatActivity {
                 User user = new User();
                 Toast.makeText(this, "Выбран пользователь: " + user.getEmail(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, UserCRUDActivity.class);
-                intent.putExtra("user", (Serializable) user); // Передаём объект
+                intent.putExtra("user", (Serializable) user);
                 startActivity(intent);
             } else if (collection == "appointments") {
                 Appointment appointment = new Appointment();
                 Toast.makeText(this, "Запись: " + appointment.getClientName(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, AppointmentCRUDActivity.class);
-                intent.putExtra("appointment", (Serializable) appointment); // Передаём объект
+                intent.putExtra("appointment", (Serializable) appointment);
                 startActivity(intent);
             } else if (collection == "services") {
                 Service service = new Service();
                 Toast.makeText(this, "Сервис: " + service.getName(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, ServiceCRUDActivity.class);
-                intent.putExtra("service", (Serializable) service); // Передаём объект
+                intent.putExtra("service", (Serializable) service);
                 startActivity(intent);
             }
         } catch (Exception e){

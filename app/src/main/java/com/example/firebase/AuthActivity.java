@@ -77,13 +77,17 @@ public class AuthActivity extends AppCompatActivity {
         String email = emailField.getText().toString();
         String password = passwordField.getText().toString();
 
-        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
-            if (task.isSuccessful()) {
-                checkUserRole();
-            } else {
-                Toast.makeText(this, "Ошибка авторизации", Toast.LENGTH_SHORT).show();
-            }
-        });
+        try{
+            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
+                if (task.isSuccessful()) {
+                    checkUserRole();
+                } else {
+                    Toast.makeText(this, "Ошибка авторизации", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch(Exception e) {
+            Toast.makeText(this, "Ошибка авторизации", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void checkUserRole() {
@@ -94,14 +98,12 @@ public class AuthActivity extends AppCompatActivity {
                     .addOnSuccessListener(documentSnapshot -> {
                         String role = documentSnapshot.getString("role");
                         if (role != null) {
-                            // Создаем объект User
                             User user = new User(
                                     firebaseUser.getUid(),
                                     firebaseUser.getEmail(),
                                     role
                             );
 
-                            // Создаем Intent и передаем объект User
                             Intent intent;
                             switch (role) {
                                 case "admin":
