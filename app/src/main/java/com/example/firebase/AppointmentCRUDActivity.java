@@ -82,8 +82,15 @@ public class AppointmentCRUDActivity extends AppCompatActivity {
                     .update(appointment)
                     .addOnSuccessListener(aVoid -> Toast.makeText(this, "Обновлено", Toast.LENGTH_SHORT).show())
                     .addOnFailureListener(e -> Toast.makeText(this, "Ошибка обновления", Toast.LENGTH_SHORT).show());
+
+            Log log = new Log();
+
+            log.setTag("update");
+            log.setMessage("Админ обновил запись с ID: " + id);
+            log.setDate(new Date());
+
+            db.collection("logs").add(log);
         } else {
-            // Создание новой записи с автоматической генерацией ID
             db.collection("appointments")
                     .add(appointment)
                     .addOnSuccessListener(documentReference -> {
@@ -91,6 +98,13 @@ public class AppointmentCRUDActivity extends AppCompatActivity {
                         Toast.makeText(this, "Создано", Toast.LENGTH_SHORT).show();
                     })
                     .addOnFailureListener(e -> Toast.makeText(this, "Ошибка создания", Toast.LENGTH_SHORT).show());
+
+            Log log = new Log();
+
+            log.setTag("add");
+            log.setMessage("Админ добавил запись");
+            log.setDate(new Date());
+            db.collection("logs").add(log);
         }
     }
 
@@ -104,5 +118,13 @@ public class AppointmentCRUDActivity extends AppCompatActivity {
         db.collection("appointments").document(id).delete()
                 .addOnSuccessListener(aVoid -> Toast.makeText(this, "Удалено", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Toast.makeText(this, "Ошибка удаления", Toast.LENGTH_SHORT).show());
+
+        Log log = new Log();
+
+        log.setTag("delete");
+        log.setMessage("Админ удалил запись с ID: " + id);
+        log.setDate(new Date());
+
+        db.collection("logs").add(log);
     }
 }

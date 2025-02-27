@@ -7,6 +7,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Date;
+
 public class UserCRUDActivity extends AppCompatActivity {
     private EditText editId, editEmail, editRole, editPassword;
     private Button btnSave, btnDelete;
@@ -49,6 +51,14 @@ public class UserCRUDActivity extends AppCompatActivity {
                 .update("email", email, "role", role)
                 .addOnSuccessListener(aVoid -> Toast.makeText(this, "Обновлено", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Toast.makeText(this, "Ошибка обновления", Toast.LENGTH_SHORT).show());
+
+        Log log = new Log();
+
+        log.setTag("update");
+        log.setMessage("Админ обновил пользователя с ID: " + Usr.getId());
+        log.setDate(new Date());
+
+        db.collection("logs").add(log);
     }
 
     private void deleteUser() {
@@ -61,6 +71,12 @@ public class UserCRUDActivity extends AppCompatActivity {
                 .addOnSuccessListener(aVoid -> Toast.makeText(this, "Удалено", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Toast.makeText(this, "Ошибка удаления", Toast.LENGTH_SHORT).show());
 
+        Log log = new Log();
 
+        log.setTag("delete");
+        log.setMessage("Админ удалил пользователя с ID: " + Usr.getId());
+        log.setDate(new Date());
+
+        db.collection("logs").add(log);
     }
 }

@@ -6,6 +6,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,13 +45,18 @@ public class ServiceCRUDActivity extends AppCompatActivity {
         service.put("name", name);
 
         if (!id.isEmpty()) {
-            // Обновление существующей записи
             db.collection("services").document(id)
                     .update(service)
                     .addOnSuccessListener(aVoid -> Toast.makeText(this, "Обновлено", Toast.LENGTH_SHORT).show())
                     .addOnFailureListener(e -> Toast.makeText(this, "Ошибка обновления", Toast.LENGTH_SHORT).show());
+
+            Log log = new Log();
+
+            log.setTag("delete");
+            log.setMessage("Админ обновил услугу с ID: " + id);
+            log.setDate(new Date());
+            db.collection("logs").add(log);
         } else {
-            // Создание новой записи с автоматической генерацией ID
             db.collection("services")
                     .add(service)
                     .addOnSuccessListener(documentReference -> {
@@ -57,6 +64,13 @@ public class ServiceCRUDActivity extends AppCompatActivity {
                         Toast.makeText(this, "Создано", Toast.LENGTH_SHORT).show();
                     })
                     .addOnFailureListener(e -> Toast.makeText(this, "Ошибка создания", Toast.LENGTH_SHORT).show());
+
+            Log log = new Log();
+
+            log.setTag("add");
+            log.setMessage("Админ добавил новую услугу");
+            log.setDate(new Date());
+            db.collection("logs").add(log);
         }
     }
 
@@ -70,5 +84,11 @@ public class ServiceCRUDActivity extends AppCompatActivity {
         db.collection("services").document(id).delete()
                 .addOnSuccessListener(aVoid -> Toast.makeText(this, "Удалено", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Toast.makeText(this, "Ошибка удаления", Toast.LENGTH_SHORT).show());
+
+        Log log = new Log();
+        log.setTag("delete");
+        log.setMessage("Админ удалил услугу: " + id);
+        log.setDate(new Date());
+        db.collection("logs").add(log);
     }
 }
