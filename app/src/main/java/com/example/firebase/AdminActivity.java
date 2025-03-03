@@ -101,13 +101,20 @@ public class AdminActivity extends AppCompatActivity {
                 if (collection.equals("users")) {
                     User user = doc.toObject(User.class);
                     if (user != null) {
-                        user.setId(doc.getId()); // 🔥 Добавляем ID вручную
+                        user.setId(doc.getId());
                         dataList.add(user);
                     }
                 } else if (collection.equals("appointments")) {
-                    Appointment appointment = doc.toObject(Appointment.class);
+                    Appointment appointment = new Appointment();
+                    appointment.setId(doc.getId());
+                    appointment.setClientId(doc.getString("client_id"));
+                    appointment.setClientName(doc.getString("client_name"));
+                    appointment.setServiceId(doc.getString("service_id"));
+                    appointment.setServiceName(doc.getString("service_name"));
+                    appointment.setDate(doc.getString("date"));
+                    appointment.setTime(doc.getString("time"));
                     if (appointment != null) {
-                        appointment.setId(doc.getId()); // 🔥 Если у Appointment есть id, тоже добавляем
+                        appointment.setId(doc.getId());
                         dataList.add(appointment);
                     }
                 } else if (collection.equals("services")) {
@@ -121,5 +128,4 @@ public class AdminActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
         });
     }
-
 }

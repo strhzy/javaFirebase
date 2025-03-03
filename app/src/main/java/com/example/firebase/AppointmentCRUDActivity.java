@@ -35,6 +35,15 @@ public class AppointmentCRUDActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btnSave);
         btnDelete = findViewById(R.id.btnDelete);
 
+
+        editId.setText(appointment.getId());
+        editClientId.setText(appointment.getClientId());
+        editClientName.setText(appointment.getClientName());
+        editServiceId.setText(appointment.getServiceId());
+        editServiceName.setText(appointment.getServiceName());
+        editDate.setText(appointment.getDate());
+        editTime.setText(appointment.getTime());
+
         db = FirebaseFirestore.getInstance();
 
         btnSave.setOnClickListener(v -> saveOrUpdateAppointment());
@@ -56,26 +65,13 @@ public class AppointmentCRUDActivity extends AppCompatActivity {
             return;
         }
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-        Date date = null;
-        Date time = null;
-
-        try {
-            date = dateFormat.parse(dateStr);
-            time = timeFormat.parse(timeStr);
-        } catch (ParseException e) {
-            Toast.makeText(this, "Неверный формат даты или времени", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         Map<String, Object> appointment = new HashMap<>();
         appointment.put("client_id", Integer.parseInt(clientId));
         appointment.put("client_name", clientName);
         appointment.put("service_id", Integer.parseInt(serviceId));
         appointment.put("service_name", serviceName);
-        appointment.put("date", date);
-        appointment.put("time", time);
+        appointment.put("date", dateStr);
+        appointment.put("time", timeStr);
 
         if (!id.isEmpty()) {
             db.collection("appointments").document(id)
